@@ -1,0 +1,58 @@
+[project]
+name = "phoneangel"
+version = "0.1.0"
+description = "AI Phone Call Agent & Coach for Autistic Adults — accessibility tool that helps prepare for, coach through, and make phone calls"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.12"
+authors = [{ name = "PhoneAngel Team" }]
+keywords = ["autism", "accessibility", "ai", "phone-anxiety", "digitalocean", "gradient-ai"]
+
+dependencies = [
+    # DigitalOcean Gradient AI SDK
+    "do-gradientai>=0.1.0b4",
+    # Web framework
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    # Real-time speech-to-text
+    "deepgram-sdk>=3.8.0",
+    # Telephony (AI proxy calls)
+    "twilio>=9.4.0",
+    # Database
+    "sqlmodel>=0.0.22",
+    "greenlet>=3.0.0",
+    "aiosqlite>=0.20.0",
+    # Async HTTP
+    "httpx>=0.28.0",
+    "websockets>=14.0",
+    # Data / Config
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.7.0",
+    "python-dotenv>=1.0.1",
+    # Utilities
+    "structlog>=24.4.0",
+    "python-multipart>=0.0.18",
+    "jinja2>=3.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.25.0",
+    "ruff>=0.8.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/phoneangel"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
