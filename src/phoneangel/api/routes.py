@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from datetime import datetime
 import structlog
 from fastapi import APIRouter, Depends, HTTPException, WebSocket, WebSocketDisconnect
 from sqlmodel.ext.asyncio.session import AsyncSession
@@ -40,9 +41,11 @@ async def create_or_update_profile(
     if profile.id:
         existing = await db.get(UserProfile, profile.id)
         if existing:
+            skip = {"id", "created_at", "updated_at"}
             for field in profile.model_fields:
-                if field != "id":
+                if field not in skip:
                     setattr(existing, field, getattr(profile, field))
+            existing.updated_at = datetime.utcnow()
             db.add(existing)
             await db.commit()
             await db.refresh(existing)
@@ -128,19 +131,23 @@ async def live_coach_websocket(
     """
     await websocket.accept()
 
-    # Initialize session (in production, fetch from DB)
-    profile = UserProfile(id=user_id)
-    objective = ""
-
     try:
         # First message should be the call objective
         init_data = await websocket.receive_json()
         objective = init_data.get("objective", "General phone call")
-        profile.display_name = init_data.get("name", "")
-        profile.date_of_birth = init_data.get("dob", "")
-        profile.insurance_id = init_data.get("insurance_id", "")
-        profile.address = init_data.get("address", "")
-        profile.phone_number = init_data.get("phone", "")
+
+        # Fetch saved profile from DB
+        async for db in get_session():
+            profile = await db.get(UserProfile, user_id)
+            break
+
+        if not profile:
+            profile = UserProfile(id=user_id)
+            profile.display_name = init_data.get("name", "")
+            profile.date_of_birth = init_data.get("dob", "")
+            profile.insurance_id = init_data.get("insurance_id", "")
+            profile.address = init_data.get("address", "")
+            profile.phone_number = init_data.get("phone", "")
 
         coach = LiveCoachSession(profile=profile, objective=objective)
 

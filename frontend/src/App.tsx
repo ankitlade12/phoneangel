@@ -91,8 +91,14 @@ type UserProfile = {
   display_name: string
   date_of_birth: string
   phone_number: string
+  email: string
   address: string
+  insurance_provider: string
   insurance_id: string
+  primary_doctor: string
+  medications: string
+  allergies: string
+  emergency_contact: string
   preferred_pharmacy: string
   sensory_profile: string
   max_hold_time_seconds: number
@@ -103,7 +109,7 @@ type UserProfile = {
 type Mode = 'prep' | 'coach' | 'proxy' | 'history' | 'profile'
 
 // Backend dev server URL (unsandboxed, on your Mac)
-const API_BASE = 'http://127.0.0.1:8001'
+const API_BASE = 'http://localhost:8001'
 
 function useApiBase() {
   return useMemo(() => {
@@ -911,8 +917,14 @@ function ProfileView({ apiBase }: ProfileViewProps) {
     display_name: '',
     date_of_birth: '',
     phone_number: '',
+    email: '',
     address: '',
+    insurance_provider: '',
     insurance_id: '',
+    primary_doctor: '',
+    medications: '',
+    allergies: '',
+    emergency_contact: '',
     preferred_pharmacy: '',
     sensory_profile: 'normal',
     max_hold_time_seconds: 120,
@@ -1022,11 +1034,71 @@ function ProfileView({ apiBase }: ProfileViewProps) {
           </label>
 
           <label className="field">
+            <span>Email</span>
+            <input
+              type="email"
+              value={profile.email}
+              onChange={(e) => handleChange('email', e.target.value)}
+              placeholder="you@example.com"
+            />
+          </label>
+
+          <label className="field">
+            <span>Insurance provider</span>
+            <input
+              type="text"
+              value={profile.insurance_provider}
+              onChange={(e) => handleChange('insurance_provider', e.target.value)}
+              placeholder="e.g. BlueCross BlueShield"
+            />
+          </label>
+
+          <label className="field">
             <span>Insurance ID</span>
             <input
               type="text"
               value={profile.insurance_id}
               onChange={(e) => handleChange('insurance_id', e.target.value)}
+            />
+          </label>
+
+          <label className="field">
+            <span>Primary doctor</span>
+            <input
+              type="text"
+              value={profile.primary_doctor}
+              onChange={(e) => handleChange('primary_doctor', e.target.value)}
+              placeholder="e.g. Dr. Smith (dentist)"
+            />
+          </label>
+
+          <label className="field">
+            <span>Medications</span>
+            <input
+              type="text"
+              value={profile.medications}
+              onChange={(e) => handleChange('medications', e.target.value)}
+              placeholder="e.g. None, or Ibuprofen 200mg"
+            />
+          </label>
+
+          <label className="field">
+            <span>Allergies</span>
+            <input
+              type="text"
+              value={profile.allergies}
+              onChange={(e) => handleChange('allergies', e.target.value)}
+              placeholder="e.g. None, or Penicillin"
+            />
+          </label>
+
+          <label className="field">
+            <span>Emergency contact</span>
+            <input
+              type="text"
+              value={profile.emergency_contact}
+              onChange={(e) => handleChange('emergency_contact', e.target.value)}
+              placeholder="e.g. Sai — (415) 555-0199"
             />
           </label>
 

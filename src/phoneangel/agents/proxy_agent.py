@@ -60,10 +60,22 @@ def _build_proxy_context(
         profile_parts.append(f"Date of birth: {profile.date_of_birth}")
     if profile.phone_number:
         profile_parts.append(f"Callback number: {profile.phone_number}")
-    if profile.insurance_id:
-        profile_parts.append(f"Insurance ID: {profile.insurance_id}")
+    if profile.email:
+        profile_parts.append(f"Email: {profile.email}")
     if profile.address:
         profile_parts.append(f"Address: {profile.address}")
+    if profile.insurance_provider:
+        profile_parts.append(f"Insurance provider: {profile.insurance_provider}")
+    if profile.insurance_id:
+        profile_parts.append(f"Insurance ID: {profile.insurance_id}")
+    if profile.primary_doctor:
+        profile_parts.append(f"Primary doctor: {profile.primary_doctor}")
+    if profile.medications:
+        profile_parts.append(f"Medications: {profile.medications}")
+    if profile.allergies:
+        profile_parts.append(f"Allergies: {profile.allergies}")
+    if profile.emergency_contact:
+        profile_parts.append(f"Emergency contact: {profile.emergency_contact}")
 
     return PROXY_SYSTEM_PROMPT.format(
         target_entity=request.target_entity,

@@ -77,12 +77,24 @@ class LiveCoachSession:
             parts.append(f"Name: {self.profile.display_name}")
         if self.profile.date_of_birth:
             parts.append(f"DOB: {self.profile.date_of_birth}")
-        if self.profile.insurance_id:
-            parts.append(f"Insurance: {self.profile.insurance_id}")
-        if self.profile.address:
-            parts.append(f"Address: {self.profile.address}")
         if self.profile.phone_number:
             parts.append(f"Phone: {self.profile.phone_number}")
+        if self.profile.email:
+            parts.append(f"Email: {self.profile.email}")
+        if self.profile.address:
+            parts.append(f"Address: {self.profile.address}")
+        if self.profile.insurance_provider:
+            parts.append(f"Insurance provider: {self.profile.insurance_provider}")
+        if self.profile.insurance_id:
+            parts.append(f"Insurance ID: {self.profile.insurance_id}")
+        if self.profile.primary_doctor:
+            parts.append(f"Primary doctor: {self.profile.primary_doctor}")
+        if self.profile.medications:
+            parts.append(f"Medications: {self.profile.medications}")
+        if self.profile.allergies:
+            parts.append(f"Allergies: {self.profile.allergies}")
+        if self.profile.emergency_contact:
+            parts.append(f"Emergency contact: {self.profile.emergency_contact}")
         return "\n".join(parts) if parts else "No profile data."
 
     async def process_transcript_chunk(

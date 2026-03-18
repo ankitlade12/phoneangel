@@ -76,10 +76,22 @@ def _build_user_context(profile: UserProfile) -> str:
         parts.append(f"Date of birth: {profile.date_of_birth}")
     if profile.phone_number:
         parts.append(f"Phone: {profile.phone_number}")
+    if profile.email:
+        parts.append(f"Email: {profile.email}")
     if profile.address:
         parts.append(f"Address: {profile.address}")
+    if profile.insurance_provider:
+        parts.append(f"Insurance provider: {profile.insurance_provider}")
     if profile.insurance_id:
         parts.append(f"Insurance ID: {profile.insurance_id}")
+    if profile.primary_doctor:
+        parts.append(f"Primary doctor: {profile.primary_doctor}")
+    if profile.medications:
+        parts.append(f"Medications: {profile.medications}")
+    if profile.allergies:
+        parts.append(f"Allergies: {profile.allergies}")
+    if profile.emergency_contact:
+        parts.append(f"Emergency contact: {profile.emergency_contact}")
     if profile.preferred_pharmacy:
         parts.append(f"Pharmacy: {profile.preferred_pharmacy}")
     if profile.notes:
